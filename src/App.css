@@ -1,7 +1,12 @@
 .App {
   text-align: center;
 }
-
+body{
+  background: black;
+}
+body, head, html{
+  overflow-x: hidden;
+}
 
 .App-logo {
   height: 40vmin;

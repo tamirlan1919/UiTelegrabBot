@@ -12,7 +12,7 @@ const Voices = () => {
     const settings = {
         infinite: true,
         speed: 500,
-        slidesToShow: 2,
+        slidesToShow: 1,
         slidesToScroll: 1,
         centerMode: true,
       };
@@ -40,14 +40,14 @@ const Voices = () => {
       };
   return (
     <div>
-    <h2>Выберите голос</h2>
+    <h2 className= {style.text2}>Выберите голос</h2>
     <Slider {...settings}>
      
       {Object.keys(voiceDescriptions).map((voice) => (
         <div
           key={voice}
           
-          className={`${style.voice} mr-8 ${selectedVoice === voice ? 'selected' : ''}` }
+          className={`${style.voice}  ${selectedVoice === voice ? 'selected' : ''}` }
           onClick={() => handleVoiceSelect(voice)}
         >
           <p className= {style.text}>{voiceDescriptions[voice]}</p>
