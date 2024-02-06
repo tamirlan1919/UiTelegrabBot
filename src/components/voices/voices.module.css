@@ -1,20 +1,25 @@
 .voice{
-    margin-right: 50px;
+    display: flex;
+    margin-right: 99px;
     box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.1);
-    height: 200px;
+    max-height: 71px;
     background-color: white;
     border-radius: 28px;
+    max-width: 222px;
+    padding: 10px;
+    margin-bottom: 30px;
 }
 
 .btns{
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100%;
+   display: flex;
+    
+   
+   
   
 }
 .btns button{
     padding: 10px;
+   
     color: white;
     border: none;
     font-size: 16px;
@@ -22,7 +27,9 @@
     background-color: #151741;
     
 }
-
+.top{
+    margin-top: 269px;
+}
 .osn{
     margin-right: 20px;
 }
@@ -31,6 +38,7 @@
     font-weight: bold;
     text-align: left;
     padding-left: 20px;
+    display: flex;
 }
 .text2{
     color: white;

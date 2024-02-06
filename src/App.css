@@ -2,7 +2,8 @@
   text-align: center;
 }
 body{
-  background: black;
+  background: rgb(82,131,176);
+  background: linear-gradient(261deg, rgba(82,131,176,1) 80%, rgba(252,252,252,1) 100%, rgba(22,119,255,1) 100%);
 }
 body, head, html{
   overflow-x: hidden;
