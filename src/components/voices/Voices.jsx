@@ -5,7 +5,8 @@ import 'slick-carousel/slick/slick-theme.css';
 import style from './voices.module.css';
 import { GrCaretNext } from 'react-icons/gr';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
-
+import img1 from './Vector.svg'
+import img2 from './SVG.svg'
 const Voices = () => {
   const [selectedVoice, setSelectedVoice] = useState(null);
   const settings = {
@@ -16,22 +17,23 @@ const Voices = () => {
     centerMode: true,
   };
 
-  const voiceDescriptions = {
-    alena: 'Алёна 💅',
-    filipp: 'Филипп 👤',
-    ermil: 'Ермил 👤',
-    jane: 'Джейн 💅',
-    madirus: 'Мадирас 👤',
-    omazh: 'Омаж 👤',
-    zahar: 'Захар 👤',
-  };
-
   const voiceDescriptionsSecond = {
+    alena: 'Алёна 💅',
     dasha: 'Даша 💅',
     julia: 'Юлия 💅',
     lera: 'Лера 💅',
     masha: 'Маша 💅',
     marina: 'Марина 💅',
+    jane: 'Джейн 💅',
+
+  };
+
+  const voiceDescriptions = {
+    filipp: 'Филипп 👤',
+    ermil: 'Ермил 👤',
+    madirus: 'Мадирас 👤',
+    omazh: 'Омаж 👤',
+    zahar: 'Захар 👤',
     alexander: 'Александр 👤',
     kirill: 'Кирилл 👤',
     anton: 'Антон 👤',
@@ -50,38 +52,45 @@ const Voices = () => {
           <div
             key={voice}
             
-            className={`${style.voice} text-2xl  ${selectedVoice === voice ? 'selected' : ''}`}
+            className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}
             onClick={() => handleVoiceSelect(voice)}
           >
-            <p className={style.text}>{voiceDescriptions[voice]}</p>
-            <div className={style.btns}>
-              <button>
-                <GrCaretNext />
+            <div className='flex'>
+              <p className={style.text}>{voiceDescriptions[voice]}</p>
+            
+            <div className={`${style.btns} `}>
+              <button className='mr-1 bg-[#1677FF] text-white'>
+                <img src={img1} alt="" />
               </button>
               <button>
-                <IoCheckmarkDoneSharp />
+                <img src= {img2} alt="" />
               </button>
             </div>
+          </div>
           </div>
         ))}
       </Slider>
       <Slider {...settings}>
         {Object.keys(voiceDescriptionsSecond).map((voice) => (
-          <div
-            key={voice}
-            className={`${style.voice} ${selectedVoice === voice ? 'selected' : ''}`}
-            onClick={() => handleVoiceSelect(voice)}
-          >
-            <p className={style.text}>{voiceDescriptionsSecond[voice]}</p>
-            <div className={style.btns}>
-              <button>
-                <GrCaretNext />
-              </button>
-              <button>
-                <IoCheckmarkDoneSharp />
-              </button>
+              <div
+              key={voice}
+              
+              className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}
+              onClick={() => handleVoiceSelect(voice)}
+            >
+              <div className='flex'>
+                <p className={style.text}>{voiceDescriptionsSecond[voice]}</p>
+              
+              <div className={`${style.btns} `}>
+                <button className='mr-1 bg-[#1677FF] text-white'>
+                  <img src={img1} alt="" />
+                </button>
+                <button>
+                  <img src= {img2} alt="" />
+                </button>
+              </div>
             </div>
-          </div>
+            </div>
         ))}
       </Slider>
     </div>

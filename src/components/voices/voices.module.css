@@ -1,5 +1,4 @@
 .voice{
-    display: flex;
     margin-right: 99px;
     box-shadow: 7px 7px 12px rgba(0, 0, 0, 0.1);
     max-height: 71px;
@@ -8,23 +7,24 @@
     max-width: 222px;
     padding: 10px;
     margin-bottom: 30px;
+
 }
 
 .btns{
    display: flex;
-    
+    margin: 0 auto;
    
    
   
 }
 .btns button{
     padding: 10px;
-   
+    
     color: white;
     border: none;
     font-size: 16px;
     border-radius: 15px;
-    background-color: #151741;
+  
     
 }
 .top{
@@ -34,8 +34,9 @@
     margin-right: 20px;
 }
 .text{
-    font-size: 15px;
-    font-weight: bold;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+
     text-align: left;
     padding-left: 20px;
     display: flex;
