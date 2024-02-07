@@ -21,8 +21,8 @@ const Tuning = () => {
           <Slider defaultValue={1.0}  max={2.9} min={0.1} step={0.1} />
 
           <div className= {style.choice}>
-              <Button type="primary">MP3</Button>
-              <Button>WAV</Button>
+              <button className='bg-[#1677FF] w-[70px] text-[white] max-h-[70px] rounded-[7px] text-[20px] p-2'>MP3</button>
+              <button className='bg-white w-[70px] text-[black] max-h-[70px] rounded-[7px] text-[20px] p-2'>WAV</button>
           </div>
         </div>
         </div>
