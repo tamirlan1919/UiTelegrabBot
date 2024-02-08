@@ -18,9 +18,9 @@ import voice6 from './alex.mp3'
 
 const Voices = () => {
   const tg = window.Telegram.Webapp;
+  
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [currentAudio, setCurrentAudio] = useState(null);
-  alert(tg?.initDataUnsafe?.user?.username)
   const settings = {
     infinite: true,
     speed: 500,
@@ -70,6 +70,7 @@ const Voices = () => {
 
   return (
     <div className={style.top}>
+      <span>{tg?.user?.username}</span>
       <h1 className=' text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
       <Slider {...settings}>
         {Object.keys(voiceDescriptionsSecond).map((voice) => (
