@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -7,8 +7,17 @@ import { GrCaretNext } from 'react-icons/gr';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import img1 from './Vector.svg'
 import img2 from './SVG.svg'
+import voice1 from './filipp.ogg'
+import voice2 from './ermil.ogg'
+import voice3 from './madirus.ogg'
+import voice4 from './Omazh.ogg'
+import voice5 from './zahar.ogg'
+import voice6 from './alex.ogg'
+
 const Voices = () => {
   const [selectedVoice, setSelectedVoice] = useState(null);
+  const [currentAudio, setCurrentAudio] = useState(null);
+
   const settings = {
     infinite: true,
     speed: 500,
@@ -16,24 +25,37 @@ const Voices = () => {
     slidesToScroll: 1,
     centerMode: true,
   };
-
+  const playAudio = (audioSrc) => {
+    if (currentAudio) {
+      currentAudio.pause(); // Пауза текущего аудио, если оно есть
+    }
+    const audio = new Audio(audioSrc);
+    audio.play();
+    setCurrentAudio(audio);
+  };
+  useEffect(() => {
+    return () => {
+      if (currentAudio) {
+        currentAudio.pause();
+      }
+    };
+  }, [selectedVoice]);
   const voiceDescriptionsSecond = {
-    filipp: 'Филипп 👤',
-    ermil: 'Ермил 👤',
-    madirus: 'Мадирас 👤',
-    omazh: 'Омаж 👤',
-    zahar: 'Захар 👤',
-    alexander: 'Александр 👤',
-    kirill: 'Кирилл 👤',
-    anton: 'Антон 👤',
-    alena: 'Алёна 💅',
-    dasha: 'Даша 💅',
-    julia: 'Юлия 💅',
-    lera: 'Лера 💅',
-    masha: 'Маша 💅',
-    marina: 'Марина 💅',
-    jane: 'Джейн 💅',
-
+    filipp: { name: 'Филипп 👤', audio: voice1},
+    ermil: { name: 'Ермил 👤', audio: voice2 },
+    madirus: { name: 'Мадирас 👤', audio: voice3 },
+    omazh: { name: 'Омаж 💅', audio: voice4 },
+    zahar: { name: 'Захар 👤', audio: voice5 },
+    alexander: { name: 'Александр 👤', audio: voice6 },
+    kirill: { name: 'Кирилл 👤', audio: 'path/to/kirill.mp3' },
+    anton: { name: 'Антон 👤', audio: 'path/to/anton.mp3' },
+    alena: { name: 'Алёна 💅', audio: 'path/to/alena.mp3' },
+    dasha: { name: 'Даша 💅', audio: 'path/to/dasha.mp3' },
+    julia: { name: 'Юлия 💅', audio: 'path/to/julia.mp3' },
+    lera: { name: 'Лера 💅', audio: 'path/to/lera.mp3' },
+    masha: { name: 'Маша 💅', audio: 'path/to/masha.mp3' },
+    marina: { name: 'Марина 💅', audio: 'path/to/marina.mp3' },
+    jane: { name: 'Джейн 💅', audio: 'path/to/jane.mp3' },
   };
 
  
@@ -55,18 +77,23 @@ const Voices = () => {
             onClick={() => handleVoiceSelect(voice)}
           >
             <div className='flex'>
-              <p className={style.text}>{voiceDescriptionsSecond[voice]}</p>
+              <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
             
             <div className={`${style.btns} `}>
-              <button className='mr-1 bg-[#1677FF] text-white'>
-                <img src={img1} alt="" />
-              </button>
-              <button>
+            <button 
+            className='mr-1 bg-[#1677FF] text-white' 
+
+          >
+            <img src={img1} alt="" />
+          </button>
+              <button 
+                          onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
                 <img src= {img2} alt="" />
               </button>
             </div>
           </div>
           </div>
+          
         ))}
       </Slider>
 
