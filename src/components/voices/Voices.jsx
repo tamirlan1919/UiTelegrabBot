@@ -7,12 +7,12 @@ import { GrCaretNext } from 'react-icons/gr';
 import { IoCheckmarkDoneSharp } from 'react-icons/io5';
 import img1 from './Vector.svg'
 import img2 from './SVG.svg'
-import voice1 from './filipp.ogg'
-import voice2 from './ermil.ogg'
-import voice3 from './madirus.ogg'
-import voice4 from './Omazh.ogg'
-import voice5 from './zahar.ogg'
-import voice6 from './alex.ogg'
+import voice1 from './filipp.mp3'
+import voice2 from './ermil.mp3'
+import voice3 from './madirus.mp3'
+import voice4 from './Omazh.mp3'
+import voice5 from './zahar.mp3'
+import voice6 from './alex.mp3'
 
 const Voices = () => {
   const [selectedVoice, setSelectedVoice] = useState(null);
