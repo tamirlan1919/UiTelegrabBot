@@ -18,6 +18,14 @@ const Voices = () => {
   };
 
   const voiceDescriptionsSecond = {
+    filipp: 'Филипп 👤',
+    ermil: 'Ермил 👤',
+    madirus: 'Мадирас 👤',
+    omazh: 'Омаж 👤',
+    zahar: 'Захар 👤',
+    alexander: 'Александр 👤',
+    kirill: 'Кирилл 👤',
+    anton: 'Антон 👤',
     alena: 'Алёна 💅',
     dasha: 'Даша 💅',
     julia: 'Юлия 💅',
@@ -28,17 +36,7 @@ const Voices = () => {
 
   };
 
-  const voiceDescriptions = {
-    filipp: 'Филипп 👤',
-    ermil: 'Ермил 👤',
-    madirus: 'Мадирас 👤',
-    omazh: 'Омаж 👤',
-    zahar: 'Захар 👤',
-    alexander: 'Александр 👤',
-    kirill: 'Кирилл 👤',
-    anton: 'Антон 👤',
-  };
-
+ 
   const handleVoiceSelect = (voice) => {
     setSelectedVoice(voice);
     // Здесь вы можете вызвать функцию для отправки выбранного голоса в ваш Python Telegram Bot
@@ -47,8 +45,9 @@ const Voices = () => {
 
   return (
     <div className={style.top}>
+      <h1 className=' text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
       <Slider {...settings}>
-        {Object.keys(voiceDescriptions).map((voice) => (
+        {Object.keys(voiceDescriptionsSecond).map((voice) => (
           <div
             key={voice}
             
@@ -56,7 +55,7 @@ const Voices = () => {
             onClick={() => handleVoiceSelect(voice)}
           >
             <div className='flex'>
-              <p className={style.text}>{voiceDescriptions[voice]}</p>
+              <p className={style.text}>{voiceDescriptionsSecond[voice]}</p>
             
             <div className={`${style.btns} `}>
               <button className='mr-1 bg-[#1677FF] text-white'>
@@ -70,29 +69,7 @@ const Voices = () => {
           </div>
         ))}
       </Slider>
-      <Slider {...settings}>
-        {Object.keys(voiceDescriptionsSecond).map((voice) => (
-              <div
-              key={voice}
-              
-              className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}
-              onClick={() => handleVoiceSelect(voice)}
-            >
-              <div className='flex'>
-                <p className={style.text}>{voiceDescriptionsSecond[voice]}</p>
-              
-              <div className={`${style.btns} `}>
-                <button className='mr-1 bg-[#1677FF] text-white'>
-                  <img src={img1} alt="" />
-                </button>
-                <button>
-                  <img src= {img2} alt="" />
-                </button>
-              </div>
-            </div>
-            </div>
-        ))}
-      </Slider>
+
     </div>
   );
 };
