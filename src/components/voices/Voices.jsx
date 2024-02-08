@@ -14,10 +14,13 @@ import voice4 from './Omazh.mp3'
 import voice5 from './zahar.mp3'
 import voice6 from './alex.mp3'
 
+
+
 const Voices = () => {
+  const tg = window.Telegram.Webapp;
   const [selectedVoice, setSelectedVoice] = useState(null);
   const [currentAudio, setCurrentAudio] = useState(null);
-
+  alert(tg?.initDataUnsafe?.user?.username)
   const settings = {
     infinite: true,
     speed: 500,
