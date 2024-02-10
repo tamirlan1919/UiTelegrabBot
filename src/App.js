@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       {/* Передаем user_id в компонент Voices */}
-      <Voices user_id={tg?.initDatUnsafe?.user?.username} />
+      <Voices user_id={user_id} />
       <Tuning />
     </div>
   );
