@@ -11,7 +11,7 @@ function App() {
   return (
     <div className="App">
       {/* Передаем user_id в компонент Voices */}
-      <Voices user_id={user_id} />
+      <Voices />
       <Tuning />
     </div>
   );

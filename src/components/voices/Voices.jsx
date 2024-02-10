@@ -14,7 +14,7 @@ import voice4 from './Omazh.mp3';
 import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
 
-const Voices = ({ user_id }) => { // Принимаем user_id как пропс
+const Voices = () => { // Принимаем user_id как пропс
 
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
@@ -57,14 +57,14 @@ const Voices = ({ user_id }) => { // Принимаем user_id как проп�
 
     const handleVoiceSelect = (voice) => {
         setSelectedVoice(voice);
-        saveSettings(user_id, voice, currentSpeed, currentFormat);
+        saveSettings( voice, currentSpeed, currentFormat);
     };
 
-    const saveSettings = async (user_id, voice, speed, format) => {
+    const saveSettings = async ( voice, speed, format) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id, voice, speed, format }),
+            body: JSON.stringify({ voice, speed, format }),
         };
 
         try {
