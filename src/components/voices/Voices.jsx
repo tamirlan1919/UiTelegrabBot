@@ -76,7 +76,7 @@ const Voices = ({ user_id }) => { // Принимаем user_id как проп�
             const data = await response.json();
             console.log(data);
         } catch (error) {
-            console.error('There was an error!', error);
+            console.error('There was an  error!', error);
         }
     };
 
