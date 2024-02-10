@@ -15,6 +15,7 @@ import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
 
 const Voices = ({ user_id }) => { // Принимаем user_id как пропс
+    const tg = window.Telegram.Webapp;
 
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
@@ -66,17 +67,16 @@ const Voices = ({ user_id }) => { // Принимаем user_id как проп�
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id, voice, speed, format }),
         };
-        console.log(requestOptions)
 
         try {
-            const response = await fetch('http://127.0.0.1:50000/save_settings', requestOptions);
+            const response = await fetch('/save_settings', requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
             console.log(data);
         } catch (error) {
-            console.error('There was an  error!', error);
+            console.error('There was an error!', error);
         }
     };
 
@@ -87,6 +87,7 @@ const Voices = ({ user_id }) => { // Принимаем user_id как проп�
 
     return (
         <div className={style.top}>
+            <span>{tg?.user?.username}</span>
             <h1 className=' text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
             <Slider {...settings}>
                 {Object.keys(voiceDescriptionsSecond).map((voice) => (
