@@ -65,10 +65,10 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user_id: toString(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
+            body: JSON.stringify({user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
         };
     
-        alert(requestOptions.body)
+        
     
         try {
             const response = await fetch('http://localhost:8000/save_settings', requestOptions);
