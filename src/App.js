@@ -5,7 +5,7 @@ import Voices from './components/voices/Voices';
 const tg = window.Telegram.WebApp; // Инициализация tg до использования
 
 function App() {
-  const user_id = tg?.initDataUnsafe?.user?.username;
+  const user_id = tg?.initDataUnsafe?.user?.user_id;
 
   return (
     <div className="App">
