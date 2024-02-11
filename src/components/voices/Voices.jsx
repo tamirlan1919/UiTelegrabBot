@@ -90,6 +90,7 @@ const Voices = ({user_id}) => { // Принимаем user_id как пропс
     return (
         <div className={style.top}>
             <h1 className=' text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
+            <p>Привет {user_id}</p>
             <Slider {...settings}>
                 {Object.keys(voiceDescriptionsSecond).map((voice) => (
                     <div
