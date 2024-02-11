@@ -14,11 +14,11 @@ import voice4 from './Omazh.mp3';
 import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
 
-const Voices = () => { // Принимаем user_id как пропс
+const Voices = ({user_id}) => { // Принимаем user_id как пропс
 
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
-    const [currentSpeed, setCurrentSpeed] = useState(1.0);
+    const [currentSpeed, setCurrentSpeed] = useState(1.2);
     const [currentFormat, setCurrentFormat] = useState('mp3');
     const voiceDescriptionsSecond = {
         filipp: { name: 'Филипп 👤', audio: voice1 },
@@ -57,18 +57,20 @@ const Voices = () => { // Принимаем user_id как пропс
 
     const handleVoiceSelect = (voice) => {
         setSelectedVoice(voice);
-        saveSettings( voice, currentSpeed, currentFormat);
+        saveSettings(user_id, selectedVoice, currentSpeed, currentFormat);
     };
 
-    const saveSettings = async ( voice, speed, format) => {
+    const saveSettings = async (user_id,selectedVoice, selectedSpeed, format) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ voice, speed, format }),
+            body: JSON.stringify({user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
         };
-
+    
+        console.log(requestOptions);
+    
         try {
-            const response = await fetch('/save_settings', requestOptions);
+            const response = await fetch('http://localhost:8000/save_settings', requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
@@ -78,10 +80,11 @@ const Voices = () => { // Принимаем user_id как пропс
             console.error('There was an error!', error);
         }
     };
+    ;
 
-    const handleSaveSettings = (speed, format) => {
+    const handleSaveSettings = (speed, formate) => {
         setCurrentSpeed(speed);
-        setCurrentFormat(format);
+        setCurrentFormat(formate);
     };
 
     return (

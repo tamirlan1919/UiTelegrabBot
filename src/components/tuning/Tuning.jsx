@@ -1,17 +1,16 @@
-// Tuning.jsx
-import React, { useState } from 'react'
-import { Slider, Switch } from 'antd';
-import style from './tuning.module.css'
-import { Button, Flex } from 'antd';
+import React, { useState } from 'react';
+import { Slider } from 'antd';
+import style from './tuning.module.css';
+import { Button } from 'antd';
 
-const Tuning = ({ onSaveSettings }) => { // Принимаем onSaveSettings как пропс из Voices.jsx
-    const [height, setHeight] = useState(0); // Добавлено состояние для высоты голоса
-    const [speed, setSpeed] = useState(1.0); // Добавлено состояние для скорости голоса
+const Tuning = ({ onSaveSettings }) => {
+    const [height, setHeight] = useState(0);
+    const [speed, setSpeed] = useState(1.0);
     const [format, setFormat] = useState('mp3'); // Добавлено состояние для формата голоса
 
     const handleSave = () => {
-        onSaveSettings(speed, format); // Вызываем функцию onSaveSettings из Voices.jsx и передаем текущие значения скорости и формата
-    }
+        onSaveSettings(speed, format);
+    };
 
     return (
         <div className={style.block}>
@@ -38,13 +37,23 @@ const Tuning = ({ onSaveSettings }) => { // Принимаем onSaveSettings к
                     />
 
                     <div className={style.choice}>
-                        <button onClick={() => setFormat('mp3')} className='bg-[#1677FF] w-[70px] text-[white] max-h-[70px] rounded-[7px] text-[20px] p-2'>MP3</button>
-                        <button onClick={() => setFormat('wav')} className='bg-white w-[70px] text-[black] max-h-[70px] rounded-[7px] text-[20px] p-2'>WAV</button>
+                        <button
+                            onClick={() => setFormat('mp3')}
+                            className={`w-[70px] text-[20px] p-2 ${format === 'mp3' ? 'bg-[#1677FF] text-white' : 'bg-white text-black'} rounded-[7px]`}
+                        >
+                            MP3
+                        </button>
+                        <button
+                            onClick={() => setFormat('wav')}
+                            className={`w-[70px] text-[20px] p-2 ${format === 'wav' ? 'bg-[#1677FF] text-white' : 'bg-white text-black'} rounded-[7px]`}
+                        >
+                            WAV
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Tuning
+export default Tuning;
