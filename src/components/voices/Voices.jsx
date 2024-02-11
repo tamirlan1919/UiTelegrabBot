@@ -64,7 +64,7 @@ const Voices = ({user_id}) => { // Принимаем user_id как пропс
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
+            body: JSON.stringify({user_id: toString(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
         };
     
         console.log(requestOptions);
