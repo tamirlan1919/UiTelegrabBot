@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       {/* Передаем user_id и tg в компонент Voices */}
-      <Voices user_id={user_id}  />
+      <Voices user_id={user_id} tg = {tg}  />
       <Tuning />
     </div>
   );

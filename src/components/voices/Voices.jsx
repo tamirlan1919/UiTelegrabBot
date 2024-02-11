@@ -14,8 +14,9 @@ import voice4 from './Omazh.mp3';
 import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
 
-const Voices = ({user_id}) => { // Принимаем user_id как пропс
-    alert(user_id)
+const Voices = ({user_id,tg}) => { // Принимаем user_id как пропс
+    
+    alert(tg)
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
     const [currentSpeed, setCurrentSpeed] = useState(1.2);
@@ -90,7 +91,6 @@ const Voices = ({user_id}) => { // Принимаем user_id как пропс
     return (
         <div className={style.top}>
             <h1 className=' text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
-            <p>Привет {user_id}</p>
             <Slider {...settings}>
                 {Object.keys(voiceDescriptionsSecond).map((voice) => (
                     <div
@@ -101,7 +101,7 @@ const Voices = ({user_id}) => { // Принимаем user_id как пропс
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
                             <div className={`${style.btns} `}>
-                                <button className='mr-1 bg-[#1677FF] text-white'>
+                                <button className='mr-1 bg-[#1677FF] text-white' onClick={()=> tg.c}>
                                     <img src={img1} alt="" />
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
