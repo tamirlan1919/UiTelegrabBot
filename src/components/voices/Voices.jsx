@@ -15,7 +15,7 @@ import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
 
 const Voices = ({user_id}) => { // Принимаем user_id как пропс
-
+    alert(user_id)
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
     const [currentSpeed, setCurrentSpeed] = useState(1.2);
