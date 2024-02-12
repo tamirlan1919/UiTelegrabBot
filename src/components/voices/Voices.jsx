@@ -61,7 +61,7 @@ const Voices = ({ user_id, tg }) => {
             body: JSON.stringify({ user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
     
-        alert(requestOptions.body.user_id)
+        alert(requestOptions.body)
     
         try {
             const response = await fetch('http://localhost:8000/save_settings', requestOptions);
