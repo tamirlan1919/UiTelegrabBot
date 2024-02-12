@@ -14,9 +14,7 @@ import voice4 from './Omazh.mp3';
 import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
 
-const Voices = ({user_id,tg}) => { // Принимаем user_id как пропс
-    
-    alert(tg)
+const Voices = ({ user_id, tg }) => {
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
     const [currentSpeed, setCurrentSpeed] = useState(1.2);
@@ -56,20 +54,13 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
         setCurrentAudio(audio);
     };
 
-    const handleVoiceSelect = (voice) => {
-        setSelectedVoice(voice);
-        saveSettings(user_id, selectedVoice, currentSpeed, currentFormat);
-    };
-
-    const saveSettings = async (user_id,selectedVoice, selectedSpeed, format) => {
+    const saveSettings = async (user_id, selectedVoice, selectedSpeed, format) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
+            body: JSON.stringify({ user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
-    
-        
-    
+
         try {
             const response = await fetch('http://localhost:8000/save_settings', requestOptions);
             if (!response.ok) {
@@ -77,15 +68,28 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
             }
             const data = await response.json();
             console.log(data);
+            return data;
         } catch (error) {
             console.error('There was an error!', error);
+            throw error;
         }
     };
-    ;
 
-    const handleSaveSettings = (speed, formate) => {
+    const handleVoiceSelect = (voice) => {
+        setSelectedVoice(voice);
+        saveSettings(user_id, voice, currentSpeed, currentFormat)
+            .then(() => {
+                tg.close();
+                alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`);
+            })
+            .catch(error => {
+                console.error('Error saving settings:', error);
+            });
+    };
+
+    const handleSaveSettings = (speed, format) => {
         setCurrentSpeed(speed);
-        setCurrentFormat(formate);
+        setCurrentFormat(format);
     };
 
     return (
@@ -96,12 +100,12 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
                     <div
                         key={voice}
                         className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}
-                        onClick={() => handleVoiceSelect(voice)}
+                        
                     >
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
                             <div className={`${style.btns} `}>
-                                <button className='mr-1 bg-[#1677FF] text-white' onClick={()=> tg.close()}>
+                                <button className='mr-1 bg-[#1677FF] text-white' onClick={() => handleVoiceSelect(voice)}>
                                     <img src={img1} alt="" />
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
