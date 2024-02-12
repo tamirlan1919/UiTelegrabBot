@@ -101,7 +101,7 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
                             <div className={`${style.btns} `}>
-                                <button className='mr-1 bg-[#1677FF] text-white' onClick={()=> tg.c}>
+                                <button className='mr-1 bg-[#1677FF] text-white' onClick={()=> tg.close()}>
                                     <img src={img1} alt="" />
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
