@@ -62,7 +62,7 @@ const Voices = ({ user_id, tg }) => {
         };
 
         try {
-            const response = await fetch('http://localhost:8000/save_settings', requestOptions);
+            const response = await fetch('http://127.0.0.1:8000/save_settings', requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
