@@ -13,12 +13,21 @@ import voice3 from './madirus.mp3';
 import voice4 from './Omazh.mp3';
 import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
+import voice7 from './kirill.mp3'
+import voice8 from './anton.mp3'
 
-const Voices = ({ user_id, tg }) => {
+import voice10 from './dasha.mp3'
+import voice11 from './julia.mp3'
+import voice12 from './12.mp3'
+import voice13 from './13.mp3'
+import voice14 from './14.mp3'
+import voice15 from './15.mp3'
+const Voices = ({ user_id, tg, speed, format }) => {
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
-    const [currentSpeed, setCurrentSpeed] = useState(1.2);
-    const [currentFormat, setCurrentFormat] = useState('mp3');
+    const [currentSpeed, setCurrentSpeed] = useState(speed); // Добавляем текущую скорость
+    const [currentFormat, setCurrentFormat] = useState(format); // Добавляем текущий формат
+
     const voiceDescriptionsSecond = {
         filipp: { name: 'Филипп 👤', audio: voice1 },
         ermil: { name: 'Ермил 👤', audio: voice2 },
@@ -26,15 +35,14 @@ const Voices = ({ user_id, tg }) => {
         omazh: { name: 'Омаж 💅', audio: voice4 },
         zahar: { name: 'Захар 👤', audio: voice5 },
         alexander: { name: 'Александр 👤', audio: voice6 },
-        kirill: { name: 'Кирилл 👤', audio: 'path/to/kirill.mp3' },
-        anton: { name: 'Антон 👤', audio: 'path/to/anton.mp3' },
-        alena: { name: 'Алёна 💅', audio: 'path/to/alena.mp3' },
-        dasha: { name: 'Даша 💅', audio: 'path/to/dasha.mp3' },
-        julia: { name: 'Юлия 💅', audio: 'path/to/julia.mp3' },
-        lera: { name: 'Лера 💅', audio: 'path/to/lera.mp3' },
-        masha: { name: 'Маша 💅', audio: 'path/to/masha.mp3' },
-        marina: { name: 'Марина 💅', audio: 'path/to/marina.mp3' },
-        jane: { name: 'Джейн 💅', audio: 'path/to/jane.mp3' },
+        kirill: { name: 'Кирилл 👤', audio: voice7 },
+        anton: { name: 'Антон 👤', audio: voice8 },
+        dasha: { name: 'Даша 💅', audio: voice10 },
+        julia: { name: 'Юлия 💅', audio: voice11 },
+        lera: { name: 'Лера 💅', audio: voice12 },
+        masha: { name: 'Маша 💅', audio: voice13 },
+        marina: { name: 'Марина 💅', audio: voice14 },
+        jane: { name: 'Джейн 💅', audio: voice15 },
     };
 
     const settings = {

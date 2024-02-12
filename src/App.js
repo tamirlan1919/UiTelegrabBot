@@ -1,4 +1,5 @@
 import './App.css';
+import ParentComponent from './components/parent/ParentComponent';
 import Tuning from './components/tuning/Tuning';
 import Voices from './components/voices/Voices';
 
@@ -10,8 +11,7 @@ function App() {
   return (
     <div className="App">
       {/* Передаем user_id и tg в компонент Voices */}
-      <Voices user_id={user_id} tg = {tg}  />
-      <Tuning />
+      <ParentComponent user_id={user_id} tg={tg}/>
     </div>
   );
 }

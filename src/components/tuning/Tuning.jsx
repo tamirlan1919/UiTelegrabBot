@@ -1,12 +1,12 @@
+// Tuning.jsx
 import React, { useState } from 'react';
 import { Slider } from 'antd';
 import style from './tuning.module.css';
-import { Button } from 'antd';
 
 const Tuning = ({ onSaveSettings }) => {
-    const [height, setHeight] = useState(0);
     const [speed, setSpeed] = useState(1.0);
-    const [format, setFormat] = useState('mp3'); // Добавлено состояние для формата голоса
+    const [format, setFormat] = useState('mp3');
+    const [height, setHeight] = useState(0);
 
     const handleSave = () => {
         onSaveSettings(speed, format);
