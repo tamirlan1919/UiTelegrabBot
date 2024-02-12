@@ -1,4 +1,3 @@
-// Voices.jsx
 import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -13,20 +12,20 @@ import voice3 from './madirus.mp3';
 import voice4 from './Omazh.mp3';
 import voice5 from './zahar.mp3';
 import voice6 from './alex.mp3';
-import voice7 from './kirill.mp3'
-import voice8 from './anton.mp3'
+import voice7 from './kirill.mp3';
+import voice8 from './anton.mp3';
+import voice10 from './dasha.mp3';
+import voice11 from './julia.mp3';
+import voice12 from './12.mp3';
+import voice13 from './13.mp3';
+import voice14 from './14.mp3';
+import voice15 from './15.mp3';
 
-import voice10 from './dasha.mp3'
-import voice11 from './julia.mp3'
-import voice12 from './12.mp3'
-import voice13 from './13.mp3'
-import voice14 from './14.mp3'
-import voice15 from './15.mp3'
 const Voices = ({ user_id, tg, speed, format }) => {
     const [selectedVoice, setSelectedVoice] = useState(null);
     const [currentAudio, setCurrentAudio] = useState(null);
-    const [currentSpeed, setCurrentSpeed] = useState(speed); // Добавляем текущую скорость
-    const [currentFormat, setCurrentFormat] = useState(format); // Добавляем текущий формат
+    const [currentSpeed, setCurrentSpeed] = useState(speed);
+    const [currentFormat, setCurrentFormat] = useState(format);
 
     const voiceDescriptionsSecond = {
         filipp: { name: 'Филипп 👤', audio: voice1 },
@@ -52,53 +51,6 @@ const Voices = ({ user_id, tg, speed, format }) => {
         slidesToScroll: 1,
         centerMode: true,
     };
-    const playAudio = (audioSrc) => {
-        // Создаем новый элемент аудио
-        const audio = new Audio(audioSrc);
-        
-        // Добавляем обработчик события click для воспроизведения аудио
-        const playHandler = () => {
-            audio.play();
-            setCurrentAudio(audio);
-            // Удаляем обработчик после первого вызова, чтобы не было повторного воспроизведения при последующих кликах
-            document.removeEventListener('click', playHandler);
-        };
-        
-        // Добавляем обработчик события click для запуска воспроизведения аудио
-        // Этот обработчик добавляется только если устройство пользователя не iOS
-        if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-            document.addEventListener('click', playHandler);
-        } else {
-            // Если устройство iOS, показываем кнопку воспроизведения и даем пользователю возможность начать воспроизведение
-            const playButton = document.createElement('button');
-            playButton.textContent = 'Play Audio';
-            playButton.addEventListener('click', playHandler);
-            document.body.appendChild(playButton);
-        }
-    };
-
-    const saveSettings = async (user_id, selectedVoice, selectedSpeed, format) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
-        };
-    
-        
-    
-        try {
-            const response = await fetch('http://localhost:8000/save_settings', requestOptions);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            console.log(data);
-            return data;
-        } catch (error) {
-            console.error('There was an error!', error);
-            throw error;
-        }
-    };
 
     const handleVoiceSelect = (voice) => {
         setSelectedVoice(voice);
@@ -117,24 +69,51 @@ const Voices = ({ user_id, tg, speed, format }) => {
         setCurrentFormat(format);
     };
 
+    const playAudio = (audioSrc) => {
+        if (currentAudio) {
+            currentAudio.pause();
+        }
+        const audio = new Audio(audioSrc);
+        setCurrentAudio(audio);
+        audio.play();
+    };
+
+    const saveSettings = async (user_id, selectedVoice, selectedSpeed, format) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
+        };
+
+        try {
+            const response = await fetch('http://localhost:8000/save_settings', requestOptions);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.error('There was an error!', error);
+            throw error;
+        }
+    };
+
     return (
         <div className={style.top}>
-            <h1 className=' text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
+            <h1 className='text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
             <Slider {...settings}>
                 {Object.keys(voiceDescriptionsSecond).map((voice) => (
-                    <div
-                        key={voice}
-                        className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}
-                        
-                    >
+                    <div key={voice} className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}>
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
-                            <div className={`${style.btns} `}>
+                            <div className={`${style.btns}`}>
                                 <button className='mr-1 bg-[#1677FF] text-white' onClick={() => handleVoiceSelect(voice)}>
-                                    <img src={img1} alt="" />
+                                    <img src={img1} alt='' />
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
-                                    <img src={img2} alt="" />
+                                    <img src={img2} alt='' />
+                                    <audio src={voiceDescriptionsSecond[voice].audio} style={{ display: 'none' }} />
                                 </button>
                             </div>
                         </div>
