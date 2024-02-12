@@ -52,14 +52,22 @@ const Voices = ({ user_id, tg, speed, format }) => {
         slidesToScroll: 1,
         centerMode: true,
     };
-
     const playAudio = (audioSrc) => {
         if (currentAudio) {
             currentAudio.pause();
         }
         const audio = new Audio(audioSrc);
-        audio.play();
-        setCurrentAudio(audio);
+    
+        // Добавляем обработчик события click для воспроизведения аудио
+        const playHandler = () => {
+            audio.play();
+            setCurrentAudio(audio);
+            // Удаляем обработчик после первого вызова, чтобы не было повторного воспроизведения при последующих кликах
+            document.removeEventListener('click', playHandler);
+        };
+    
+        // Добавляем обработчик события click для воспроизведения аудио
+        document.addEventListener('click', playHandler);
     };
 
     const saveSettings = async (user_id, selectedVoice, selectedSpeed, format) => {
@@ -69,7 +77,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
     
-        alert(requestOptions.body)
+        
     
         try {
             const response = await fetch('http://localhost:8000/save_settings', requestOptions);
