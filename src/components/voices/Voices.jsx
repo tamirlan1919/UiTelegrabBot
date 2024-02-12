@@ -68,7 +68,7 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
             body: JSON.stringify({user_id: user_id, selected_voice: selectedVoice, selected_speed: selectedSpeed, formate: format }),
         };
     
-        
+        alert(requestOptions.body.user_id)
     
         try {
             const response = await fetch('http://localhost:8000/save_settings', requestOptions);
@@ -96,12 +96,12 @@ const Voices = ({user_id,tg}) => { // Принимаем user_id как проп
                     <div
                         key={voice}
                         className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}
-                        onClick={() => handleVoiceSelect(voice)}
+                        
                     >
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
                             <div className={`${style.btns} `}>
-                                <button className='mr-1 bg-[#1677FF] text-white' onClick={()=> tg.c}>
+                                <button className='mr-1 bg-[#1677FF] text-white' onClick={() => handleVoiceSelect(voice)}>
                                     <img src={img1} alt="" />
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
