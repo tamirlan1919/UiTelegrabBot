@@ -53,11 +53,9 @@ const Voices = ({ user_id, tg, speed, format }) => {
         centerMode: true,
     };
     const playAudio = (audioSrc) => {
-        if (currentAudio) {
-            currentAudio.pause();
-        }
+        // Создаем новый элемент аудио
         const audio = new Audio(audioSrc);
-    
+        
         // Добавляем обработчик события click для воспроизведения аудио
         const playHandler = () => {
             audio.play();
@@ -65,9 +63,18 @@ const Voices = ({ user_id, tg, speed, format }) => {
             // Удаляем обработчик после первого вызова, чтобы не было повторного воспроизведения при последующих кликах
             document.removeEventListener('click', playHandler);
         };
-    
-        // Добавляем обработчик события click для воспроизведения аудио
-        document.addEventListener('click', playHandler);
+        
+        // Добавляем обработчик события click для запуска воспроизведения аудио
+        // Этот обработчик добавляется только если устройство пользователя не iOS
+        if (!/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+            document.addEventListener('click', playHandler);
+        } else {
+            // Если устройство iOS, показываем кнопку воспроизведения и даем пользователю возможность начать воспроизведение
+            const playButton = document.createElement('button');
+            playButton.textContent = 'Play Audio';
+            playButton.addEventListener('click', playHandler);
+            document.body.appendChild(playButton);
+        }
     };
 
     const saveSettings = async (user_id, selectedVoice, selectedSpeed, format) => {
