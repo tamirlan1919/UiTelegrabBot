@@ -15,7 +15,7 @@ const ParentComponent = ({ user_id, tg }) => {
     return (
         <div>
             <Voices user_id={user_id} tg={tg} speed={speed} format={format} />
-            <Tuning onSaveSettings={handleSaveSettings} />
+            {/* <Tuning onSaveSettings={handleSaveSettings} /> */}
         </div>
     );
 };
