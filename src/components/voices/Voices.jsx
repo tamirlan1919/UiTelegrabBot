@@ -6,7 +6,7 @@ import style from './voices.module.css';
 import Tuning from '../tuning/Tuning';
 import img1 from './Vector.svg';
 import img2 from './SVG.svg';
-
+import img3 from './Vector (1).svg'
 
 const Voices = ({ user_id, tg, speed, format }) => {
     const [selectedVoice, setSelectedVoice] = useState(null);
@@ -88,15 +88,16 @@ const Voices = ({ user_id, tg, speed, format }) => {
 
     return (
         <div className={style.top}>
-            <h1 className='text-[32px] mb-[25px] text-left text-white ml-10 bold-[700]'>Выберите голос</h1>
-            <Slider {...settings}>
+            <Slider {...settings} className=''>
                 {Object.keys(voiceDescriptionsSecond).map((voice) => (
                     <div key={voice} className={`${style.voice} text-2xl flex ${selectedVoice === voice ? 'selected' : ''}`}>
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
                             <div className={`${style.btns}`}>
-                            <button className={`mr-1  text-white ${activeButton === voice ? 'bg-[#ffb11f]' : 'bg-[#1677FF]'}`} onClick={() => handleVoiceSelect(voice)}>
-                                    <img src={img1} alt='' />
+                            <button className={`mr-1  text-white ${activeButton === voice ? 'bg-[#1677FF]' : 'bg-white '}`} onClick={() => handleVoiceSelect(voice)}>
+                                    {activeButton === voice ?<img src={img1} alt='' /> : <img src={img3} alt='' />
+                                    }
+                                    
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
                                     <img src={img2} alt='' />
