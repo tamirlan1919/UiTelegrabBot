@@ -13,23 +13,24 @@ const Voices = ({ user_id, tg, speed, format }) => {
     const [currentAudio, setCurrentAudio] = useState(null);
     const [currentSpeed, setCurrentSpeed] = useState(speed);
     const [currentFormat, setCurrentFormat] = useState(format);
+    const [activeButton, setActiveButton] = useState(null); // Добавляем состояние для активной кнопки
 
 
     const voiceDescriptionsSecond = {
-      filipp: { name: 'Филипп 👤', audio: './filipp.mp3' },
-      ermil: { name: 'Ермил 👤', audio: './ermil.mp3' },
-      madirus: { name: 'Мадирас 👤', audio: './madiras.mp3' },
-      omazh: { name: 'Омаж 💅', audio: './omazh.mp3' },
-      zahar: { name: 'Захар 👤', audio: './zahar.mp3' },
-      alexander: { name: 'Александр 👤', audio: './alex.mp3' },
-      kirill: { name: 'Кирилл 👤', audio: './kirill.mp3' },
-      anton: { name: 'Антон 👤', audio: './anton.mp3' },
-      dasha: { name: 'Даша 💅', audio: './dasha.mp3' },
-      julia: { name: 'Юлия 💅', audio: './julia.mp3' },
-      lera: { name: 'Лера 💅', audio: './12.mp3' },
-      masha: { name: 'Маша 💅', audio: './13.mp3' },
-      marina: { name: 'Марина 💅', audio: './14.mp3' },
-      jane: { name: 'Джейн 💅', audio: './15.mp3' },
+      filipp: { name: 'Филипп 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913202/jtvwwc1a4njfks9n2ta8.mp3' },
+      ermil: { name: 'Ермил 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913250/jhzkwslm5emodsxiym4j.mp3' },
+      madirus: { name: 'Мадирас 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913289/mzsirpz7c3vtivn7shwp.mp3' },
+      omazh: { name: 'Омаж 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913326/e8qgjxtmqm5iy0xj7cmx.mp3' },
+      zahar: { name: 'Захар 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913363/istjneayrx1zwsi3yfub.mp3' },
+      alexander: { name: 'Александр 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913401/pjgrjamxi7vuutaf55rv.mp3' },
+      kirill: { name: 'Кирилл 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913439/l8lcnewliaaiwugb2gfl.mp3' },
+      anton: { name: 'Антон 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913481/iffujulpzmkjgtusbvlo.mp3' },
+      dasha: { name: 'Даша 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913514/hbvthxyktjyflvwnoyue.mp3' },
+      julia: { name: 'Юлия 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913566/rct1retobsl36jorcu5e.mp3' },
+      lera: { name: 'Лера 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913618/uqscx2wxyzqismh0vaca.mp3' },
+      masha: { name: 'Маша 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913648/dbfjjdh5aessyprovsvn.mp3' },
+      marina: { name: 'Марина 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913732/ltjews0xskk0wlzad4qp.mp3' },
+      jane: { name: 'Джейн 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913769/qistbheln4riqu3uonlq.mp3' },
   };
     const settings = {
         infinite: true,
@@ -41,10 +42,10 @@ const Voices = ({ user_id, tg, speed, format }) => {
 
     const handleVoiceSelect = (voice) => {
         setSelectedVoice(voice);
+        setActiveButton(voice); // Обновляем активную кнопку
+
         saveSettings(user_id, voice, currentSpeed, currentFormat)
             .then(() => {
-                tg.close();
-                alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`);
             })
             .catch(error => {
                 console.error('Error saving settings:', error);
@@ -71,7 +72,6 @@ const Voices = ({ user_id, tg, speed, format }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
-        alert(requestOptions.body)
         try {
             const response = await fetch('https://nmntzh.ru/save_settings', requestOptions);
             if (!response.ok) {
@@ -95,7 +95,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
                         <div className='flex'>
                             <p className={style.text}>{voiceDescriptionsSecond[voice].name}</p>
                             <div className={`${style.btns}`}>
-                                <button className='mr-1 bg-[#1677FF] text-white' onClick={() => handleVoiceSelect(voice)}>
+                            <button className={`mr-1  text-white ${activeButton === voice ? 'bg-[#ffb11f]' : 'bg-[#1677FF]'}`} onClick={() => handleVoiceSelect(voice)}>
                                     <img src={img1} alt='' />
                                 </button>
                                 <button onClick={() => playAudio(voiceDescriptionsSecond[voice].audio)}>
