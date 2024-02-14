@@ -15,23 +15,22 @@ const Voices = ({ user_id, tg, speed, format }) => {
     const [currentFormat, setCurrentFormat] = useState(format);
 
 
-    const voiceDescriptionsSecond = [
-      { name: 'Филипп 👤', audio: "https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707839788/sw57qbudlqkhp4vcuxrx.mp3" },
-      { name: 'Ермил 👤', audio: '/ermil.mp3' },
-      { name: 'Мадирас 👤', audio: '/madirus.mp3' },
-      { name: 'Омаж 💅', audio: '/Omazh.mp3' },
-      { name: 'Захар 👤', audio: '/zahar.mp3' },
-      { name: 'Александр 👤', audio: '/alex.mp3' },
-      { name: 'Кирилл 👤', audio: '/kirill.mp3' },
-      { name: 'Антон 👤', audio: '/anton.mp3' },
-      { name: 'Даша 💅', audio: '/dasha.mp3' },
-      { name: 'Юлия 💅', audio: '/julia.mp3' },
-      { name: 'Лера 💅', audio: '/12.mp3' },
-      { name: 'Маша 💅', audio: '/13.mp3' },
-      { name: 'Марина 💅', audio: '/14.mp3' },
-      { name: 'Джейн 💅', audio: '/15.mp3' },
-  ]
-
+    const voiceDescriptionsSecond = {
+      filipp: { name: 'Филипп 👤', audio: './filipp.mp3' },
+      ermil: { name: 'Ермил 👤', audio: './ermil.mp3' },
+      madirus: { name: 'Мадирас 👤', audio: './madiras.mp3' },
+      omazh: { name: 'Омаж 💅', audio: './omazh.mp3' },
+      zahar: { name: 'Захар 👤', audio: './zahar.mp3' },
+      alexander: { name: 'Александр 👤', audio: './alex.mp3' },
+      kirill: { name: 'Кирилл 👤', audio: './kirill.mp3' },
+      anton: { name: 'Антон 👤', audio: './anton.mp3' },
+      dasha: { name: 'Даша 💅', audio: './dasha.mp3' },
+      julia: { name: 'Юлия 💅', audio: './julia.mp3' },
+      lera: { name: 'Лера 💅', audio: './12.mp3' },
+      masha: { name: 'Маша 💅', audio: './13.mp3' },
+      marina: { name: 'Марина 💅', audio: './14.mp3' },
+      jane: { name: 'Джейн 💅', audio: './15.mp3' },
+  };
     const settings = {
         infinite: true,
         speed: 500,
@@ -72,7 +71,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
-
+        alert(requestOptions.body)
         try {
             const response = await fetch('https://nmntzh.ru/save_settings', requestOptions);
             if (!response.ok) {
