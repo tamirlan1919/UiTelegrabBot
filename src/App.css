@@ -7,7 +7,6 @@ body{
 }
 body, head, html{
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 .App-logo {
