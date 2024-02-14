@@ -6,7 +6,6 @@ body{
 
 }
 body, head, html{
-  max-height: 80vh;
   overflow-x: hidden;
 }
 
