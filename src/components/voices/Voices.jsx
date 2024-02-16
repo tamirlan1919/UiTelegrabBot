@@ -46,6 +46,9 @@ const Voices = ({ user_id, tg, speed, format }) => {
 
         saveSettings(user_id, voice, currentSpeed, currentFormat)
             .then(() => {
+              tg.close();
+              tg.sendData(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`)
+              // alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`);
             })
             .catch(error => {
                 console.error('Error saving settings:', error);
@@ -72,6 +75,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
+
         try {
             const response = await fetch('https://nmntzh.ru/save_settings', requestOptions);
             if (!response.ok) {
@@ -85,7 +89,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             throw error;
         }
     };
-
+    
     return (
         <div className={style.top}>
             <Slider {...settings} className=''>
