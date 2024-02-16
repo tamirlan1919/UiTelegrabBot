@@ -47,8 +47,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
         saveSettings(user_id, voice, currentSpeed, currentFormat)
             .then(() => {
               tg.close();
-              tg.sendData(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`)
-              // alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`);
+              alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`);
             })
             .catch(error => {
                 console.error('Error saving settings:', error);
