@@ -74,6 +74,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format }),
         };
+        alert(requestOptions.body)
 
         try {
             const response = await fetch('https://nmntzh.ru/save_settings', requestOptions);
