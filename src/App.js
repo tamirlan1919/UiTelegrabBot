@@ -10,7 +10,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* Передаем user_id и tg в компонент Voices */}
       <ParentComponent user_id={user_id} tg={tg}/>
     </div>
   );
