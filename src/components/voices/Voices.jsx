@@ -76,7 +76,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
         };
 
         try {
-            const response = await fetch('http://localhost:8000/save_settings', requestOptions);
+            const response = await fetch('https://nmntzh.ru/save_settings', requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
