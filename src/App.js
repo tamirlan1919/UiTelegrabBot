@@ -12,8 +12,11 @@ function App() {
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const userIdParam = searchParams.get('user_id');
-    if (userIdParam) {
+    if (userIdParam != null) {
       setUserId(userIdParam);
+    }
+    else{
+      setUserId(tg?.initDataUnsafe?.user?.id)
     }
   }, []);
   
