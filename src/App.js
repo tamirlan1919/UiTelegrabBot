@@ -1,16 +1,25 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 import ParentComponent from './components/parent/ParentComponent';
 import Tuning from './components/tuning/Tuning';
 import Voices from './components/voices/Voices';
 
-const tg = window.Telegram.WebApp; // Инициализация tg до использования
+const tg = window.Telegram.WebApp;
 
 function App() {
-  const user_id = tg?.initDataUnsafe?.user?.id;
+  const [userId, setUserId] = useState(null);
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const userIdParam = searchParams.get('user_id');
+    if (userIdParam) {
+      setUserId(userIdParam);
+    }
+  }, []);
+  
   return (
     <div className="App">
-      <ParentComponent user_id={user_id} tg={tg}/>
+      <ParentComponent user_id={userId} tg={tg}/>
     </div>
   );
 }
