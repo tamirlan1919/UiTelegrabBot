@@ -46,8 +46,8 @@ const Voices = ({ user_id, tg, speed, format }) => {
 
         saveSettings(user_id, voice, currentSpeed, currentFormat)
             .then(() => {
-              tg.close();
-              alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}`);
+              
+              alert(`Вы выбрали голос ${voiceDescriptionsSecond[voice].name}\nМожете написать в чат`);
             })
             .catch(error => {
                 console.error('Error saving settings:', error);
@@ -76,7 +76,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
         };
 
         try {
-            const response = await fetch('https://nmntzh.ru/save_settings', requestOptions);
+            const response = await fetch('http://62.113.110.178:8000/save_settings', requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
