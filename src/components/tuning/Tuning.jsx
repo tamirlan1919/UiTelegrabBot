@@ -1,63 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { Slider } from 'antd';
+import { Slider, Select } from 'antd';
 import style from './tuning.module.css';
 
-const Tuning = ({ onSaveSettings }) => {
+const { Option } = Select;
+
+const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescriptionsSecond, selectedRole, roleLabels, setSelectedVoice, setActiveButton, setSelectedRole }) => {
     const [speed, setSpeed] = useState(1.0);
     const [format, setFormat] = useState('mp3');
     const [height, setHeight] = useState(0);
-    const [settingsChanged, setSettingsChanged] = useState(false);
-    const [buttonColor, setButtonColor] = useState('#FFFFFF');
-    const [color,setColor] = useState('black')
-    const [settingsSaved, setSettingsSaved] = useState(false);
+    const [roles, setRoles] = useState([]);
 
     useEffect(() => {
-        // Проверка изменения настроек
-        if (settingsSaved) {
-            setSettingsChanged(false);
-            setSettingsSaved(false);
-            setButtonColor('#FFFFFF');
-            setColor('black')
+        if (selectedVoice && voiceDescriptionsSecond[selectedCountry][selectedVoice] && voiceDescriptionsSecond[selectedCountry][selectedVoice].role) {
+            setRoles(voiceDescriptionsSecond[selectedCountry][selectedVoice].role);
+        } else {
+            setRoles([]);
         }
-    }, [settingsSaved]);
+    }, [selectedVoice, selectedCountry, voiceDescriptionsSecond]);
 
     const handleSave = () => {
-        onSaveSettings(speed, format);
-        setButtonColor('#1677FF');
-        setColor('white')
-
-        alert('Настройки сохранены. Теперь выберите голос.');
+        onSaveSettings(speed, format, selectedRole[selectedVoice]);
+        alert('Настройки сохранены. Теперь выберите роль.');
     };
 
     const handleSpeedChange = value => {
         setSpeed(value);
-        setSettingsChanged(true);
-        setButtonColor('#FFFFFF');
-        setColor('black')
-
     };
 
     const handleHeightChange = value => {
         setHeight(value);
-        setSettingsChanged(true);
-        setButtonColor('#FFFFFF');
-        setColor('black')
-
     };
 
     const handleFormatChange = selectedFormat => {
         setFormat(selectedFormat);
-        setSettingsChanged(true);
-        setButtonColor('#FFFFFF');
-        setColor('black')
+    };
 
+    const handleRoleSelect = (voice, role) => {
+        setSelectedVoice(voice);
+        const selectedRoleValue = role !== undefined ? role : 'undefined'; 
+        setSelectedRole(prevState => ({
+            ...prevState,
+            [voice]: selectedRoleValue
+        }));
     };
 
     return (
         <div className={style.block}>
             <div className="wrapper bg-[#F8F8F8] rounded-[25px] p-4">
                 <div className=' float-right'>
-                    <button onClick={handleSave} className={`bg-[${buttonColor}] text-${color} p-2 uppercase font-[12px] rounded-lg`}>Сохранить</button>
+                    <button onClick={handleSave} className={`bg-white text-black p-2 uppercase font-[12px] rounded-lg`}>Сохранить</button>
                 </div>
                 <div className='mt-[50px]'>
                     <p>Текущая высота голоса</p>
@@ -76,7 +67,24 @@ const Tuning = ({ onSaveSettings }) => {
                         min={0.1}
                         step={0.1}
                     />
-
+                    <div style={{marginBottom : "20px"}}>
+                    <p style={{ marginBottom: '10px'}}>Роли</p>
+                    {roles.length > 0 ? (
+                        <Select
+                            value={selectedRole[selectedVoice]}
+                            className={style.sel}
+                            style={{width:"150px"}}
+                            onChange={(value) => handleRoleSelect(selectedVoice, value)}
+                        >
+                            {roles.map((role, index) => (
+                                <Option key={index} value={role}>{roleLabels[role]}</Option>
+                            ))}
+                        </Select>
+                    ) : (
+                        <Select disabled className={style.sel} />
+                    )}
+                    </div>
+                    <p>Формат</p>
                     <div className={style.choice}>
                         <button
                             onClick={() => handleFormatChange('mp3')}
