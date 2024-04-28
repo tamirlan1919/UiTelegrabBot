@@ -26,7 +26,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
     const [currentSpeed, setCurrentSpeed] = useState(speed);
     const [currentFormat, setCurrentFormat] = useState(format);
     const [activeButton, setActiveButton] = useState(null);
-    const [selectedCountry, setSelectedCountry] = useState(null);
+    const [selectedCountry, setSelectedCountry] = useState('Russia');
     const [selectedRole, setSelectedRole] = useState({});
 
     const voiceDescriptionsSecond = {
