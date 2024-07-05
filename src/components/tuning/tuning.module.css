@@ -13,3 +13,6 @@
 .choice button{
 
 }
+.sel{
+    min-width: 100px;
+}

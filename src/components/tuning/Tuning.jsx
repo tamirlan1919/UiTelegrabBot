@@ -4,7 +4,7 @@ import style from './tuning.module.css';
 
 const { Option } = Select;
 
-const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescriptionsSecond, selectedRole, roleLabels, setSelectedVoice, setActiveButton, setSelectedRole }) => {
+const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescriptionsSecond, selectedRole, roleLabels, setSelectedVoice, setActiveButton, setSelectedRole, isSaved }) => {
     const [speed, setSpeed] = useState(1.0);
     const [format, setFormat] = useState('mp3');
     const [height, setHeight] = useState(0);
@@ -18,9 +18,16 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
         }
     }, [selectedVoice, selectedCountry, voiceDescriptionsSecond]);
 
+    useEffect(() => {
+        if (roles.length > 0 && !selectedRole[selectedVoice]) {
+            handleRoleSelect(selectedVoice, roles[0]);
+        } else if (roles.length === 0 && selectedRole[selectedVoice] !== "Нейтральный") {
+            handleRoleSelect(selectedVoice, "Нейтральный");
+        }
+    }, [roles, selectedVoice, selectedRole]);
+
     const handleSave = () => {
         onSaveSettings(speed, format, selectedRole[selectedVoice]);
-        alert('Настройки сохранены. Теперь выберите роль.');
     };
 
     const handleSpeedChange = value => {
@@ -37,7 +44,7 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
 
     const handleRoleSelect = (voice, role) => {
         setSelectedVoice(voice);
-        const selectedRoleValue = role !== undefined ? role : 'undefined'; 
+        const selectedRoleValue = role !== undefined ? role : 'Нейтральный'; 
         setSelectedRole(prevState => ({
             ...prevState,
             [voice]: selectedRoleValue
@@ -48,7 +55,7 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
         <div className={style.block}>
             <div className="wrapper bg-[#F8F8F8] rounded-[25px] p-4">
                 <div className=' float-right'>
-                    <button onClick={handleSave} className={`bg-white text-black p-2 uppercase font-[12px] rounded-lg`}>Сохранить</button>
+                    <button onClick={handleSave} className={` text-black p-2 uppercase font-[12px] rounded-lg ${isSaved ? 'bg-[#1677FF] text-white' : 'bg-white  text-black'}`}>Сохранить</button>
                 </div>
                 <div className='mt-[50px]'>
                     <p>Текущая высота голоса</p>
@@ -81,7 +88,9 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
                             ))}
                         </Select>
                     ) : (
-                        <Select disabled className={style.sel} />
+                        <Select className={style.sel} value="Нейтральный">
+                            <Option value="Нейтральный">Нейтральный</Option>
+                        </Select> 
                     )}
                     </div>
                     <p>Формат</p>
