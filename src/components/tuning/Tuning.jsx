@@ -11,23 +11,28 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
     const [roles, setRoles] = useState([]);
 
     useEffect(() => {
-        if (selectedVoice && voiceDescriptionsSecond[selectedCountry][selectedVoice] && voiceDescriptionsSecond[selectedCountry][selectedVoice].role) {
-            setRoles(voiceDescriptionsSecond[selectedCountry][selectedVoice].role);
+        
+        if (selectedVoice && voiceDescriptionsSecond[selectedCountry][selectedVoice]) {
+            const rolesData = voiceDescriptionsSecond[selectedCountry][selectedVoice].role || [];
+            setRoles(rolesData);
+            if (rolesData.length === 0 && !selectedRole[selectedVoice]) {
+                handleRoleSelect(selectedVoice, undefined);
+            }
         } else {
             setRoles([]);
         }
-    }, [selectedVoice, selectedCountry, voiceDescriptionsSecond]);
+    }, [selectedVoice, selectedCountry, voiceDescriptionsSecond, selectedRole]);
 
     useEffect(() => {
+        
         if (roles.length > 0 && !selectedRole[selectedVoice]) {
             handleRoleSelect(selectedVoice, roles[0]);
-        } else if (roles.length === 0 && selectedRole[selectedVoice] !== "Нейтральный") {
-            handleRoleSelect(selectedVoice, "Нейтральный");
         }
     }, [roles, selectedVoice, selectedRole]);
 
     const handleSave = () => {
-        onSaveSettings(speed, format, selectedRole[selectedVoice]);
+        const roleToSave = selectedRole[selectedVoice] === undefined ? undefined : selectedRole[selectedVoice];
+        onSaveSettings(speed, format, roleToSave);
     };
 
     const handleSpeedChange = value => {
@@ -43,14 +48,14 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
     };
 
     const handleRoleSelect = (voice, role) => {
+       console.log(role)
         setSelectedVoice(voice);
-        const selectedRoleValue = role !== undefined ? role : 'Нейтральный'; 
+        const selectedRoleValue = role === undefined ? "undefined" : role;
         setSelectedRole(prevState => ({
             ...prevState,
             [voice]: selectedRoleValue
         }));
     };
-
     return (
         <div className={style.block}>
             <div className="wrapper bg-[#F8F8F8] rounded-[25px] p-4">
@@ -89,7 +94,7 @@ const Tuning = ({ onSaveSettings, selectedVoice, selectedCountry, voiceDescripti
                         </Select>
                     ) : (
                         <Select className={style.sel} value="Нейтральный">
-                            <Option value="Нейтральный">Нейтральный</Option>
+                            <Option value = {undefined}>Нейтральный</Option>
                         </Select> 
                     )}
                     </div>
