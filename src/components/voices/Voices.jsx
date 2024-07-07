@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import style from './voices.module.css';
 import Tuning from '../tuning/Tuning';
+import img1 from './Vector.svg';
 import img2 from './SVG.svg';
+import img3 from './Vector (1).svg';
+import Flag from 'react-world-flags';
 import { Select } from 'antd';
 
 const { Option } = Select;
@@ -22,10 +25,12 @@ const Voices = ({ user_id, tg, speed, format }) => {
     const [currentAudio, setCurrentAudio] = useState(null);
     const [currentSpeed, setCurrentSpeed] = useState(speed);
     const [currentFormat, setCurrentFormat] = useState(format);
+    const [activeButton, setActiveButton] = useState(null);
     const [selectedCountry, setSelectedCountry] = useState('Russia');
     const [selectedRole, setSelectedRole] = useState({});
-    const [isSaved, setIsSaved] = useState(false); // Add state to track save button color
-
+    const resetActiveButton = () => {
+        setActiveButton(null);
+    };
     const voiceDescriptionsSecond = {
         Russia: {
             filipp: { name: 'Филипп 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913202/jtvwwc1a4njfks9n2ta8.mp3'},
@@ -79,7 +84,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             masha: { name: 'Маша 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913648/dbfjjdh5aessyprovsvn.mp3',
             role: [
                 'good',
-                'strict',
+                'stcrict',
                 'friendly'
             ]},
             marina: { name: 'Марина 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1707913732/ltjews0xskk0wlzad4qp.mp3' ,
@@ -111,18 +116,10 @@ const Voices = ({ user_id, tg, speed, format }) => {
         }
     };
 
-    useEffect(() => {
-        // Automatically select the first voice of the selected country if no voice is selected
-        if (selectedCountry && !selectedVoice) {
-            const firstVoiceKey = Object.keys(voiceDescriptionsSecond[selectedCountry])[0];
-            setSelectedVoice(firstVoiceKey);
-        }
-    }, [selectedCountry, selectedVoice]);
-
     const handleVoiceChange = (index) => {
         const voiceKey = Object.keys(voiceDescriptionsSecond[selectedCountry])[index];
         setSelectedVoice(voiceKey);
-        setIsSaved(false); // Reset save button color when slider changes
+
     };
 
     const settings = {
@@ -134,16 +131,14 @@ const Voices = ({ user_id, tg, speed, format }) => {
         afterChange: handleVoiceChange // Add afterChange event handler
     };
 
+ 
     const handleCountrySelect = (country) => {
         setSelectedCountry(country);
-        setSelectedVoice(null); // Reset selected voice when changing country
     };
 
-    const handleSaveSettings = async (speed, format, role) => {
+    const handleSaveSettings = (speed, format) => {
         setCurrentSpeed(speed);
         setCurrentFormat(format);
-        await saveSettings(user_id, selectedVoice, speed, format, role);
-        setIsSaved(true); // Set save button color when settings are saved
     };
 
     const playAudio = (audioSrc) => {
@@ -155,11 +150,27 @@ const Voices = ({ user_id, tg, speed, format }) => {
         audio.play();
     };
 
+    const handleVoiceSelect = (voiceKey) => {
+        setActiveButton(voiceKey); 
+        const selectedRoleValue = selectedRole[voiceKey] !== undefined ? selectedRole[voiceKey] : 'undefined'; 
+        setSelectedRole(prevState => ({
+            ...prevState,
+            [voiceKey]: selectedRoleValue
+        }));
+        saveSettings(user_id, voiceKey, currentSpeed, currentFormat, selectedRoleValue)
+            .then(() => {
+                
+            })
+            .catch(error => {
+                console.error('Error saving settings:', error);
+            });
+    };
+
     const saveSettings = async (user_id, selectedVoice, selectedSpeed, format, role) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format, role: role}),
+            body: JSON.stringify({ user_id: String(user_id), selected_voice: selectedVoice, selected_speed: selectedSpeed, format: format , role: role}),
         };
         console.log(requestOptions)
         try {
@@ -185,32 +196,36 @@ const Voices = ({ user_id, tg, speed, format }) => {
                 <button className={style.flagButton} onClick={() => handleCountrySelect('America')} style={{ backgroundImage: "url('usa.svg')" }}></button>
                 <button className={style.flagButton} onClick={() => handleCountrySelect('Germany')} style={{ backgroundImage: "url('ge.svg')" }}></button>
             </div>
-            <Slider {...settings} className=''>
-                {selectedCountry && Object.entries(voiceDescriptionsSecond[selectedCountry]).map(([voiceKey, voice]) => (
-                    <div key={voiceKey} className={`${style.voice} text-2xl flex ${selectedVoice === voiceKey ? style.selected : ''}`}>
-                        <div className='flex'>
-                            <p className={style.text}>{voice.name}</p>
-                            <div className={`${style.btns}`}>
-                                <button onClick={() => playAudio(voice.audio)}>
-                                    <img src={img2} alt='' />
-                                    <audio src={voice.audio} style={{ display: 'none' }} />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+            <Slider {...settings} className='' >
+     {selectedCountry && Object.entries(voiceDescriptionsSecond[selectedCountry]).map(([voiceKey, voice]) => (
+    <div key={voiceKey} className={`${style.voice} text-2xl flex ${selectedVoice === voiceKey ? 'selected' : ''}` }>
+        <div className='flex'>
+            <p className={style.text}>{voice.name}</p>
+            <div className={`${style.btns}`}>
+                <button className={`mr-1 text-white ${activeButton === voiceKey ? 'bg-[#1677FF]' : 'bg-white'}`} onClick={() => handleVoiceSelect(voiceKey)} >
+                    {activeButton === voiceKey ? <img src={img1} alt='' /> : <img src={img3} alt='' />}
+                </button>
+                <button onClick={() => playAudio(voice.audio)}>
+                    <img src={img2} alt='' />
+                    <audio src={voice.audio} style={{ display: 'none' }} />
+                </button>
+            </div>
+        </div>
+    </div>
+))}
             </Slider>
             <Tuning 
                 onSaveSettings={handleSaveSettings}
+                onResetActiveButton={resetActiveButton} // Передаем новый коллбек
+
                 selectedVoice={selectedVoice}
                 selectedCountry={selectedCountry}
                 voiceDescriptionsSecond={voiceDescriptionsSecond}
                 selectedRole={selectedRole}
                 roleLabels={roleLabels}
                 setSelectedVoice={setSelectedVoice}
-                setActiveButton={() => {}}
+                setActiveButton={setActiveButton}
                 setSelectedRole={setSelectedRole}
-                isSaved={isSaved} // Pass the save state to Tuning
             />
         </div>
     );
