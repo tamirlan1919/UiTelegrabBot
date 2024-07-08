@@ -4,49 +4,43 @@ import style from './tuning.module.css';
 
 const { Option } = Select;
 
-const Tuning = ({ onSaveSettings,onResetActiveButton, selectedVoice, selectedCountry, voiceDescriptionsSecond, selectedRole, roleLabels, setSelectedVoice, setSelectedRole }) => {
+const Tuning = ({ onSaveSettings, onResetActiveButton, selectedVoice, selectedCountry, voiceDescriptionsSecond, selectedRole, roleLabels, setSelectedVoice, setSelectedRole }) => {
     const [speed, setSpeed] = useState(1.0);
     const [format, setFormat] = useState('mp3');
     const [height, setHeight] = useState(0);
     const [roles, setRoles] = useState([]);
+
     useEffect(() => {
-        if (selectedVoice && voiceDescriptionsSecond[selectedCountry][selectedVoice]) {
+        if (selectedVoice && voiceDescriptionsSecond[selectedCountry] && voiceDescriptionsSecond[selectedCountry][selectedVoice]) {
             const rolesData = voiceDescriptionsSecond[selectedCountry][selectedVoice].role || [];
             setRoles(rolesData);
-            if (rolesData.length > 0 && selectedRole[selectedVoice] !== rolesData[0]) {
+
+            if (rolesData.length > 0 && (!selectedRole[selectedVoice] || !rolesData.includes(selectedRole[selectedVoice]))) {
                 setSelectedRole(prevState => ({
                     ...prevState,
                     [selectedVoice]: rolesData[0]
                 }));
-                // Теперь onSaveSettings вызывается только при реальном изменении значения роли
                 onSaveSettings(speed, format, rolesData[0]);
             }
         }
-        // Убираем selectedRole из зависимостей, чтобы избежать зацикливания
-    }, [selectedVoice, selectedCountry, voiceDescriptionsSecond, speed, format, onSaveSettings]);
-
-
+    }, [selectedVoice, selectedCountry, voiceDescriptionsSecond, setSelectedRole, onSaveSettings]);
 
     const handleSpeedChange = value => {
-        
         setSpeed(value);
         onSaveSettings(value, format, selectedRole[selectedVoice]);
         onResetActiveButton();
-
     };
 
     const handleHeightChange = value => {
         setHeight(value);
         onSaveSettings(speed, format, selectedRole[selectedVoice]);
         onResetActiveButton();
-
     };
 
     const handleFormatChange = selectedFormat => {
         setFormat(selectedFormat);
         onSaveSettings(speed, selectedFormat, selectedRole[selectedVoice]);
         onResetActiveButton();
-
     };
 
     const handleRoleSelect = (voice, role) => {
@@ -56,7 +50,6 @@ const Tuning = ({ onSaveSettings,onResetActiveButton, selectedVoice, selectedCou
         }));
         onSaveSettings(speed, format, role);
         onResetActiveButton();
-
     };
 
     return (
@@ -94,7 +87,7 @@ const Tuning = ({ onSaveSettings,onResetActiveButton, selectedVoice, selectedCou
                             </Select>
                         ) : (
                             <Select className={style.sel} value="Нейтральный">
-                                <Option value={undefined}>Нейтральный</Option>
+                                <Option value="Нейтральный">Нейтральный</Option>
                             </Select>
                         )}
                     </div>
