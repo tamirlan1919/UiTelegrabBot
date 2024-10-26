@@ -106,7 +106,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
             amira: { name: 'Amïra 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1714239975/lhokzonisyd9xdnnsnwr.mp3' }
         },
         Uzbekistan: {
-            nighora: { name: 'Nigora 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1714240048/dyoshshkg93nboklmc03.mp3' }
+            nigora: { name: 'Nigora 💅', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1714240048/dyoshshkg93nboklmc03.mp3' }
         },
         America: {
             john: { name: 'John 👤', audio: 'https://res.cloudinary.com/dx8u8a5wj/video/upload/v1714240103/kdmlwkdqi87r3omkovrd.mp3' }
