@@ -170,7 +170,7 @@ const Voices = ({ user_id, tg, speed, format }) => {
         };
         console.log(requestOptions)
         try {
-            const response = await fetch('http://62.113.110.178:8000/save_settings', requestOptions);
+            const response = await fetch('/api/save_settings', requestOptions);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
