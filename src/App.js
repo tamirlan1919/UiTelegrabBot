@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import ParentComponent from './components/parent/ParentComponent';
-import Tuning from './components/tuning/Tuning';
-import Voices from './components/voices/Voices';
 
 const tg = window.Telegram.WebApp;
 

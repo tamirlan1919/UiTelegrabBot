@@ -7,10 +7,6 @@ import Tuning from '../tuning/Tuning';
 import img1 from './Vector.svg';
 import img2 from './SVG.svg';
 import img3 from './Vector (1).svg';
-import Flag from 'react-world-flags';
-import { Select } from 'antd';
-
-const { Option } = Select;
 const roleLabels = {
     neutral: 'Нейтральный',
     good: 'Радостный',

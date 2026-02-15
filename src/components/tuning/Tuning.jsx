@@ -23,7 +23,16 @@ const Tuning = ({ onSaveSettings, onResetActiveButton, selectedVoice, selectedCo
                 onSaveSettings(speed, format, rolesData[0]);
             }
         }
-    }, [selectedVoice, selectedCountry, voiceDescriptionsSecond, setSelectedRole, onSaveSettings]);
+    }, [
+        selectedVoice,
+        selectedCountry,
+        voiceDescriptionsSecond,
+        selectedRole,
+        speed,
+        format,
+        setSelectedRole,
+        onSaveSettings
+    ]);
 
     const handleSpeedChange = value => {
         setSpeed(value);
